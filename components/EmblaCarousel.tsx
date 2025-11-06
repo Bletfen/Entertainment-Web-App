@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import MovieDetails from "./MovieDetails";
 import BookmarkController from "./BookmarkController";
+import { handleBookMarkToggle } from "@/functions";
 
 interface ICarouselProps {
   slides: TTrendingProps;
@@ -19,11 +20,12 @@ export const EmblaCarousel: React.FC<ICarouselProps> = ({
     containScroll: "trimSnaps",
     skipSnaps: false,
   });
+  const [bookmark, setBookmark] = useState<TTrendingProps>(slides);
 
   return (
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="flex gap-[1.6rem]">
-        {slides.map((movie: ITrendingProps, index: number) => (
+        {bookmark.map((movie: ITrendingProps, index: number) => (
           <div
             className="flex-shrink-0 w-[24rem] md:w-[40%] 
             lg:w-[30%] pt-[7rem] pl-[1.6rem] pr-[0.8rem] pb-[1.6rem]
@@ -34,7 +36,10 @@ export const EmblaCarousel: React.FC<ICarouselProps> = ({
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/15 z-0"></div>
-            <BookmarkController />
+            <BookmarkController
+              isBookmarked={movie.isBookmarked}
+              onToggle={() => handleBookMarkToggle(movie.title, setBookmark)}
+            />
             <div className="relative z-10">
               <MovieDetails movie={movie} />
             </div>

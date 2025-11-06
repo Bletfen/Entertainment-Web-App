@@ -1,8 +1,12 @@
+"use client";
+import { handleBookMarkToggle } from "@/functions";
 import data from "../data.json";
 import BookmarkController from "./BookmarkController";
 import MovieDetails from "./MovieDetails";
+import { useState } from "react";
 export default function Recommended() {
   const movies = data.filter((mov) => !mov.isTrending);
+  const [bookmark, setBookmark] = useState<TTrendingProps>(movies);
   return (
     <div className="mt-[2.4rem] px-[1.6rem] pb-[6.1rem]">
       <h1 className="text-[2rem] font-[300] tracking-[-0.31px]">
@@ -12,7 +16,7 @@ export default function Recommended() {
         className="mt-[2.4rem] grid grid-cols-2 gap-[1.5rem]
         md:grid-cols-3 md:gap-[3rem] xl:grid-cols-4 xl:gap-[4rem]"
       >
-        {movies.map((movie) => (
+        {bookmark.map((movie) => (
           <div key={movie.title}>
             <div className="relative mb-[0.8rem]">
               <picture>
@@ -30,7 +34,10 @@ export default function Recommended() {
                   className="rounded-[0.8rem]"
                 />
               </picture>
-              <BookmarkController />
+              <BookmarkController
+                isBookmarked={movie.isBookmarked}
+                onToggle={() => handleBookMarkToggle(movie.title, setBookmark)}
+              />
             </div>
             <MovieDetails movie={movie} />
           </div>
