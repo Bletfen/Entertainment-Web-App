@@ -1,4 +1,19 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function Search() {
+  const [search, setSearch] = useState<string>("");
+  const router = useRouter();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && search.trim()) {
+      e.preventDefault();
+      router.push(`/search?query=${encodeURIComponent(search)}`);
+      setSearch("");
+    }
+  };
   return (
     <div className="mt-[2.4rem] px-[1.6rem] flex items-center gap-[1.6rem]">
       <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
@@ -9,6 +24,9 @@ export default function Search() {
       </svg>
       <input
         type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={handleKeyDown}
         className="outline-none text my-[0.2rem] text-[1.6rem] font-[300] text-white"
         placeholder="Search for movies or TV series"
       />

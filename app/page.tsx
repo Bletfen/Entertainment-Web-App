@@ -5,7 +5,6 @@ import Trending from "@/components/Trending";
 export default function Home() {
   return (
     <div>
-      <Search />
       <Trending />
       <Recommended />
     </div>
