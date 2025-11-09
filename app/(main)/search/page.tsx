@@ -1,6 +1,6 @@
 "use client";
 import { handleBookMarkToggle } from "@/functions";
-import data from "../../data.json";
+import data from "../../../data.json";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
 import { useState } from "react";
@@ -11,10 +11,10 @@ export default function SearchPage() {
 
   const searchQuery = movieTitle.toLowerCase();
 
-  const filteredData = data.filter((item) =>
+  const filteredData = data.filter((item: IMovies) =>
     item.title.toLowerCase().includes(searchQuery as string)
   );
-  const [bookmark, setBookmark] = useState<TTrendingProps>(filteredData);
+  const [bookmark, setBookmark] = useState<TMovies>(filteredData);
 
   return (
     <div className="mt-[2.4rem] px-[1.6rem]">
@@ -27,7 +27,7 @@ export default function SearchPage() {
         className="mt-[2.4rem] grid grid-cols-2 gap-[1.5rem]
               md:grid-cols-3 md:gap-[3rem] xl:grid-cols-4 xl:gap-[4rem]"
       >
-        {filteredData.map((movie) => (
+        {filteredData.map((movie: IMovies) => (
           <div key={movie.title}>
             <div className="relative mb-[0.8rem]">
               <picture>
