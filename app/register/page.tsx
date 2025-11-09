@@ -4,7 +4,7 @@ export default function Register() {
   return (
     <div
       className="flex flex-col items-center justify-center
-    min-h-screen gap-[5.8rem]"
+    min-h-screen px-[2.4rem]"
     >
       <AuthComponent />
     </div>

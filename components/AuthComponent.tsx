@@ -94,55 +94,35 @@ export default function Authentication() {
           </p>
         )}
         <form className="flex flex-col gap-[2.4rem]" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-[1.7rem]">
-            <Input
-              type={"email"}
-              placeHolder={"Email address"}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={emailError}
-            />
-            <div
-              className={`w-full h-px ${
-                !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
-              }`}
-            ></div>
-          </div>
-          <div className="flex flex-col gap-[1.7rem]">
+          <Input
+            type={"email"}
+            placeHolder={"Email address"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={emailError}
+          />
+          <Input
+            type={"password"}
+            placeHolder={"Password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={passwordErorr}
+          />
+          {!isLogin && (
             <Input
               type={"password"}
-              placeHolder={"Password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={passwordErorr}
+              placeHolder={"Confirm Password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              error={confirmPasswordError}
             />
-            <div
-              className={`w-full h-px ${
-                !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
-              }`}
-            ></div>
-          </div>
-          {!isLogin && (
-            <div className="flex flex-col gap-[1.7rem]">
-              <Input
-                type={"password"}
-                placeHolder={"Confirm Password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                error={confirmPasswordError}
-              />
-              <div
-                className={`w-full h-px ${
-                  !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
-                }`}
-              ></div>
-            </div>
           )}
           <button
             type="submit"
             className="w-full py-[1.5rem] bg-[#fc4747] rounded-[0.6rem]
             text-[1.5rem] font-[300]
-            cursor-pointer"
+            cursor-pointer hover:bg-white hover:text-[#10141e]
+            transition-colors duration-300"
           >
             {isLogin ? "Login to your account" : "Create an account"}
           </button>
