@@ -1,4 +1,4 @@
-interface ITrendingProps {
+interface IMovies {
   title: string;
   isBookmarked: boolean;
   isTrending: boolean;
@@ -20,4 +20,4 @@ interface ITrendingProps {
   category: string;
 }
 
-type TTrendingProps = ITrendingProps[];
+type TMovies = ITrendingProps[];
