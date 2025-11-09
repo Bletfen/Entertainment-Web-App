@@ -1,16 +1,74 @@
 "use client";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Input from "./Input";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Authentication() {
   const pathName = usePathname();
+  const router = useRouter();
   const isLogin = pathName === "/login";
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErorr, setPasswordError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setEmail("");
+    setPasswordError("");
+    setConfirmPassword("");
+
+    if (!email || !password) {
+      setEmailError("Can't be empty");
+      setPasswordError("Can't be empty");
+      return;
+    }
+
+    if (!isLogin && !confirmPassword) {
+      setErrorMessage("Can't be empty");
+      return;
+    }
+
+    if (!isLogin && password !== confirmPassword) {
+      setErrorMessage("Passwords don't match");
+      return;
+    }
+
+    try {
+      const endpoint = isLogin ? "/api/login" : "/api/register";
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setErrorMessage(data.error || "Something went wrong");
+        return;
+      }
+      if (isLogin) {
+        window.location.href = "/";
+      } else {
+        router.push("/login");
+      }
+    } catch (err) {
+      console.log("Network error. Please try again.");
+    }
+  };
 
   const handleRedirect = () => {
     if (isLogin) {
-      redirect("/register");
+      router.push("/register");
     } else {
-      redirect("login");
+      router.push("login");
     }
   };
 
@@ -30,25 +88,61 @@ export default function Authentication() {
         <h1 className="text-[3.2rem] font-[300] tracking-[-0.5px]">
           {isLogin ? "Login" : "Sign Up"}
         </h1>
-        <form className="flex flex-col gap-[2.4rem]">
+        {errorMessage && (
+          <p className="text-[1.3rem] text-[#fc4747] font-[300]">
+            {errorMessage}
+          </p>
+        )}
+        <form className="flex flex-col gap-[2.4rem]" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-[1.7rem]">
-            <Input type={"email"} placeHolder={"Email address"} />
-            <div className="w-full h-px bg-[#5a698f]"></div>
+            <Input
+              type={"email"}
+              placeHolder={"Email address"}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+            />
+            <div
+              className={`w-full h-px ${
+                !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
+              }`}
+            ></div>
           </div>
           <div className="flex flex-col gap-[1.7rem]">
-            <Input type={"password"} placeHolder={"Password"} />
-            <div className="w-full h-px bg-[#5a698f]"></div>
+            <Input
+              type={"password"}
+              placeHolder={"Password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordErorr}
+            />
+            <div
+              className={`w-full h-px ${
+                !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
+              }`}
+            ></div>
           </div>
           {!isLogin && (
             <div className="flex flex-col gap-[1.7rem]">
-              <Input type={"password"} placeHolder={"Confirm Password"} />
-              <div className="w-full h-px bg-[#5a698f]"></div>
+              <Input
+                type={"password"}
+                placeHolder={"Confirm Password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                error={confirmPasswordError}
+              />
+              <div
+                className={`w-full h-px ${
+                  !errorMessage ? "bg-[#5a698f]" : "bg-[#fc4747]"
+                }`}
+              ></div>
             </div>
           )}
           <button
             type="submit"
             className="w-full py-[1.5rem] bg-[#fc4747] rounded-[0.6rem]
-            text-[1.5rem] font-[300]"
+            text-[1.5rem] font-[300]
+            cursor-pointer"
           >
             {isLogin ? "Login to your account" : "Create an account"}
           </button>
@@ -66,7 +160,7 @@ export default function Authentication() {
             </p>
           ) : (
             <p className="text-[1.5rem] font-[300] flex gap-[0.8rem]">
-              Alread have an account?
+              Already have an account?
               <span
                 className="cursor-pointer text-[#fc4747]"
                 onClick={handleRedirect}
