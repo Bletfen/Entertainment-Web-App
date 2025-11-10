@@ -3,11 +3,13 @@ import { handleBookMarkToggle } from "@/functions";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const movieTitle = searchParams.get("query") || "";
+export default function SearchPage({
+  searchParams,
+}: {
+  searchParams: { query?: string };
+}) {
+  const movieTitle = searchParams.query || "";
 
   const searchQuery = movieTitle.toLowerCase();
   const [searchedMovies, setSearchedMovies] = useState<TMovies>([]);
