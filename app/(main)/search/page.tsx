@@ -1,11 +1,11 @@
 "use client";
 import { handleBookMarkToggle } from "@/functions";
-import data from "../../../data.json";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-export default function SearchPage() {
+
+function SearchContent() {
   const searchParams = useSearchParams();
   const movieTitle = searchParams.get("query") || "";
 
