@@ -2,10 +2,10 @@
 import { handleBookMarkToggle } from "@/functions";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-function SearchContent() {
+export default function SearchPage() {
   const searchParams = useSearchParams();
   const movieTitle = searchParams.get("query") || "";
 
