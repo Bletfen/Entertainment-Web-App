@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import MovieDetails from "./MovieDetails";
 import BookmarkController from "./BookmarkController";

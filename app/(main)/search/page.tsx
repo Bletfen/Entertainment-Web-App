@@ -3,31 +3,59 @@ import { handleBookMarkToggle } from "@/functions";
 import data from "../../../data.json";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const movieTitle = searchParams.get("query") || "";
 
   const searchQuery = movieTitle.toLowerCase();
+  const [searchedMovies, setSearchedMovies] = useState<TMovies>([]);
 
-  const filteredData = data.filter((item: IMovies) =>
-    item.title.toLowerCase().includes(searchQuery as string)
-  );
-  const [bookmark, setBookmark] = useState<TMovies>(filteredData);
+  useEffect(() => {
+    async function fetchMovies() {
+      try {
+        const [moviesRes, bookmarksRes] = await Promise.all([
+          fetch("/api/movies"),
+          fetch("/api/bookmark"),
+        ]);
+
+        const moviesData = await moviesRes.json();
+        const bookmarksData = await bookmarksRes.json();
+
+        const bookmarkedIds =
+          bookmarksData.bookmarks?.map((b: any) => b.movieId) || [];
+
+        const foundMovies = moviesData
+          .filter((item: IMovies) =>
+            item.title.toLowerCase().includes(searchQuery as string)
+          )
+          .map((mov: IMovies) => ({
+            ...mov,
+            isBookmarked: bookmarkedIds.includes(mov._id), // movieId ან _id
+          }));
+
+        setSearchedMovies(foundMovies);
+      } catch (err) {
+        console.error("Failed to fetch trending movies:", err);
+      }
+    }
+
+    fetchMovies();
+  }, []);
 
   return (
     <div className="mt-[2.4rem] px-[1.6rem]">
       <h1 className="text-[2rem] font-[300] tracking-[-0.31px] mb-[2.4rem]">
-        Found {filteredData.length}{" "}
-        {filteredData.length > 1 ? <span>results</span> : <span>result</span>}{" "}
+        Found {searchedMovies.length}{" "}
+        {searchedMovies.length > 1 ? <span>results</span> : <span>result</span>}{" "}
         for `{movieTitle}`
       </h1>
       <div
         className="mt-[2.4rem] grid grid-cols-2 gap-[1.5rem]
               md:grid-cols-3 md:gap-[3rem] xl:grid-cols-4 xl:gap-[4rem]"
       >
-        {filteredData.map((movie: IMovies) => (
+        {searchedMovies.map((movie: IMovies) => (
           <div key={movie.title}>
             <div className="relative mb-[0.8rem]">
               <picture>
@@ -46,8 +74,10 @@ export default function SearchPage() {
                 />
               </picture>
               <BookmarkController
-                isBookmarked={movie.isBookmarked}
-                onToggle={() => handleBookMarkToggle(movie.title, setBookmark)}
+                bookmarked={movie.isBookmarked}
+                onToggle={() =>
+                  handleBookMarkToggle(movie as IMovies, setSearchedMovies)
+                }
               />
             </div>
             <MovieDetails movie={movie} />
