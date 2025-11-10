@@ -1,4 +1,4 @@
-import Recommended from "@/components/Recommended";
+import MoviesList from "@/components/MoviesList";
 import Trending from "@/components/Trending";
 import { redirect } from "next/navigation";
 
@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <div>
       <Trending />
-      <Recommended />
+      <MoviesList filter="all" />
     </div>
   );
 }

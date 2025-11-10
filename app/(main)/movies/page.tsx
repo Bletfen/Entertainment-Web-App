@@ -1,3 +1,9 @@
-export default function MoviesPage() {
-  return <div>Movies</div>;
+import MoviesList from "@/components/MoviesList";
+
+export default async function MoviesPage() {
+  return (
+    <div>
+      <MoviesList filter="movie" />
+    </div>
+  );
 }

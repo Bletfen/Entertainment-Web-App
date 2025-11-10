@@ -3,7 +3,7 @@ import { handleBookMarkToggle } from "@/functions";
 import BookmarkController from "./BookmarkController";
 import MovieDetails from "./MovieDetails";
 import { useEffect, useState } from "react";
-export default function Recommended() {
+export default function MoviesList({ filter }: { filter: string }) {
   const [movies, setMovies] = useState<TMovies>([]);
   useEffect(() => {
     async function fetchMovies() {
@@ -20,7 +20,17 @@ export default function Recommended() {
           bookmarksData.bookmarks?.map((bookmark: any) => bookmark.movieId) ||
           [];
         const recommended = moviesData
-          .filter((mov: IMovies) => !mov.isTrending)
+          .filter((mov: IMovies) => {
+            if (filter === "all") {
+              return !mov.isTrending;
+            } else if (filter === "movie") {
+              return mov.category === "Movie";
+            } else if (filter === "tv") {
+              return mov.category === "TV Series";
+            } else if (filter === "bookmarked") {
+              return bookmarkedIds.includes(mov._id);
+            }
+          })
           .map((mov: IMovies) => ({
             ...mov,
             isBookmarked: bookmarkedIds.includes(mov._id),
@@ -36,9 +46,17 @@ export default function Recommended() {
   }, []);
   return (
     <div className="mt-[2.4rem] px-[1.6rem] pb-[6.1rem]">
-      <h1 className="text-[2rem] font-[300] tracking-[-0.31px]">
-        Recommended for you
-      </h1>
+      {filter === "all" && (
+        <h1 className="text-[2rem] font-[300] tracking-[-0.31px]">
+          Recommended for you
+        </h1>
+      )}
+      {filter === "movie" && (
+        <h1 className="text-[2rem] font-[300] tracking-[-0.31px]">Movies</h1>
+      )}
+      {filter === "tv" && (
+        <h1 className="text-[2rem] font-[300] tracking-[-0.31px]">TV Series</h1>
+      )}
       <div
         className="mt-[2.4rem] grid grid-cols-2 gap-[1.5rem]
         md:grid-cols-3 md:gap-[3rem] xl:grid-cols-4 xl:gap-[4rem]"

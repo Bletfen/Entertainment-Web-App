@@ -7,12 +7,12 @@ import { handleBookMarkToggle } from "@/functions";
 
 interface ICarouselProps {
   slides: TMovies;
+  setMovies: React.Dispatch<React.SetStateAction<TMovies>>;
 }
 
 export const EmblaCarousel: React.FC<ICarouselProps> = ({
   slides,
-}: {
-  slides: TMovies;
+  setMovies,
 }) => {
   const [emblaRef] = useEmblaCarousel({
     align: "center",
@@ -35,10 +35,10 @@ export const EmblaCarousel: React.FC<ICarouselProps> = ({
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/15 z-0"></div>
-            {/* <BookmarkController
-              isBookmarked={movie.isBookmarked}
-              onToggle={() => handleBookMarkToggle(movie.title)}
-            /> */}
+            <BookmarkController
+              bookmarked={movie.isBookmarked}
+              onToggle={() => handleBookMarkToggle(movie as IMovies, setMovies)}
+            />
             <div className="relative z-10">
               <MovieDetails movie={movie} />
             </div>

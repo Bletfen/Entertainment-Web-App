@@ -2,6 +2,7 @@ interface IMovies {
   _id: string;
   title: string;
   isTrending: boolean;
+  isBookmarked: boolean;
   rating: string;
   thumbnail: {
     regular: {
@@ -20,4 +21,4 @@ interface IMovies {
   category: string;
 }
 
-type TMovies = ITrendingProps[];
+type TMovies = IMovies[];
