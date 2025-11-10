@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       email,
       username,
       password: hashedPassword,
+      bookmarked: [],
       createdAt: new Date(),
     });
 

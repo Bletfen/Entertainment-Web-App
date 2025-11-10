@@ -1,6 +1,6 @@
 interface IMovies {
+  _id: string;
   title: string;
-  isBookmarked: boolean;
   isTrending: boolean;
   rating: string;
   thumbnail: {

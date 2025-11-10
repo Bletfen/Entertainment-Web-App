@@ -7,11 +7,31 @@ export default function Recommended() {
   const [movies, setMovies] = useState<TMovies>([]);
   useEffect(() => {
     async function fetchMovies() {
-      const res = await fetch("/api/movies");
-      const data = await res.json();
-      const recomended = data.filter((mov: IMovies) => !mov.isTrending);
-      setMovies(recomended);
+      try {
+        const [moviesRes, bookmarksRes] = await Promise.all([
+          fetch("/api/movies"),
+          fetch("/api/bookmark"),
+        ]);
+
+        const moviesData = await moviesRes.json();
+        const bookmarksData = await bookmarksRes.json();
+
+        const bookmarkedIds =
+          bookmarksData.bookmarks?.map((bookmark: any) => bookmark.movieId) ||
+          [];
+        const recommended = moviesData
+          .filter((mov: IMovies) => !mov.isTrending)
+          .map((mov: IMovies) => ({
+            ...mov,
+            isBookmarked: bookmarkedIds.includes(mov._id),
+          }));
+
+        setMovies(recommended);
+      } catch (err) {
+        console.error("Failed to fetch movies:", err);
+      }
     }
+
     fetchMovies();
   }, []);
   return (
@@ -42,8 +62,8 @@ export default function Recommended() {
                 />
               </picture>
               <BookmarkController
-                isBookmarked={movie.isBookmarked}
-                onToggle={() => handleBookMarkToggle(movie.title, setMovies)}
+                bookmarked={movie.isBookmarked}
+                onToggle={() => handleBookMarkToggle(movie, setMovies)}
               />
             </div>
             <MovieDetails movie={movie} />

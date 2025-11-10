@@ -1,8 +1,20 @@
+"use client";
 import { EmblaCarousel } from "./EmblaCarousel";
-import data from "../data.json";
+import { useEffect, useState } from "react";
 
 export default function Trending() {
-  const trendingData = data.filter((item) => item.isTrending === true);
+  const [trending, setTrending] = useState<TMovies>([]);
+  useEffect(() => {
+    const fetchTrending = async () => {
+      const res = await fetch("/api/movies");
+      const data = await res.json();
+      console.log("Fetched data:", data);
+      const trendingMovies = data.filter((movie: IMovies) => movie.isTrending);
+      console.log("Trending movies:", trendingMovies);
+      setTrending(trendingMovies);
+    };
+    fetchTrending();
+  }, []);
   return (
     <div
       className="mt-[2.4rem] flex flex-col gap-[1.6rem]
@@ -14,7 +26,7 @@ export default function Trending() {
       >
         Trending
       </h1>
-      <EmblaCarousel slides={trendingData} />
+      <EmblaCarousel slides={trending} />
     </div>
   );
 }
