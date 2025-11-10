@@ -2,10 +2,14 @@ import NavBar from "./NavBar";
 
 export default function Header() {
   return (
-    <div className="xl:fixed xl:left-[2.4rem] xl:top-[3.2rem] xl:z-50">
+    <div
+      className="xl:fixed xl:left-[2.4rem] xl:top-[3.2rem]
+      xl:bottom-[3.2rem] xl:z-50
+      "
+    >
       <div
         className="flex justify-between items-center p-[1.6rem]
-        xl:h-[85rem] xl:flex-col xl:bg-[#161d2f] xl:pt-[3.5rem]
+        xl:h-full xl:flex-col xl:bg-[#161d2f] xl:pt-[3.5rem]
         xl:pb-[3.2rem] xl:px-[3.2rem] xl:rounded-[2rem]
         "
       >
