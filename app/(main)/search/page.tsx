@@ -42,11 +42,14 @@ export default function SearchPage() {
     }
 
     fetchMovies();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="mt-[2.4rem] px-[1.6rem]">
-      <h1 className="text-[2rem] font-[300] tracking-[-0.31px] mb-[2.4rem]">
+      <h1
+        className="text-[2rem] font-[300] tracking-[-0.31px] mb-[2.4rem]
+        md:text-[3.2rem] md:tracking-[-0.5px]"
+      >
         Found {searchedMovies.length}{" "}
         {searchedMovies.length > 1 ? <span>results</span> : <span>result</span>}{" "}
         for `{movieTitle}`

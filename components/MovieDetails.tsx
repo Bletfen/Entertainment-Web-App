@@ -1,12 +1,16 @@
-export default function MovieDetails({ movie }: { movie: ITrendingProps }) {
+export default function MovieDetails({ movie }: { movie: IMovies }) {
   return (
     <div>
       <div
-        className="flex items-center gap-[0.9rem] text-[1.2rem] font-[300]
+        className="flex items-center gap-[0.9rem] text-[1.2rem] 
+          font-[300] md:text-[1.5rem]
                 "
       >
         <span className="opacity-[0.75]">{movie.year}</span>
-        <div className="w-[0.3rem] h-[0.3rem] bg-[#fff]/50 rounded-full"></div>
+        <div
+          className="w-[0.3rem] h-[0.3rem] bg-[#fff]/50 
+        rounded-full"
+        ></div>
         <div className="flex items-center gap-[0.9rem]">
           <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -20,7 +24,12 @@ export default function MovieDetails({ movie }: { movie: ITrendingProps }) {
         <div className="w-[0.3rem] h-[0.3rem] bg-[#fff]/50 rounded-full"></div>
         <span className="opacity-[0.75]">{movie.rating}</span>
       </div>
-      <h1 className="text-[1.5rem] font-medium">{movie.title}</h1>
+      <h1
+        className="text-[1.5rem] font-medium
+      md:text-[2.4rem]"
+      >
+        {movie.title}
+      </h1>
     </div>
   );
 }

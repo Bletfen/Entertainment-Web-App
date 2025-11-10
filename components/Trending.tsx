@@ -37,11 +37,11 @@ export default function Trending() {
   return (
     <div
       className="mt-[2.4rem] flex flex-col gap-[1.6rem]
-        pl-[1.6rem]"
+        pl-[1.6rem] md:pl-[2.5rem]"
     >
       <h1
         className="text-[2rem] font-[300] tracking-[-0.31px]
-        text-white"
+        text-white md:text-[3.2rem] md:tracking-[-0.5px]"
       >
         Trending
       </h1>
