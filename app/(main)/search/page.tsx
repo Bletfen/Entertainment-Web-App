@@ -7,10 +7,11 @@ import { useSearchParams } from "next/navigation";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const movieTitle = searchParams.get("query") || "";
+  const query = searchParams.get("query") || "";
 
-  const searchQuery = movieTitle.toLowerCase();
+  const searchQuery = query.toLowerCase();
   const [searchedMovies, setSearchedMovies] = useState<TMovies>([]);
+  console.log(searchQuery);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -41,12 +42,8 @@ export default function SearchPage() {
       }
     }
 
-    if (searchQuery) {
-      fetchMovies();
-    } else {
-      setSearchedMovies([]);
-    }
-  }, [searchQuery]);
+    fetchMovies();
+  }, [searchParams]);
 
   return (
     <div className="mt-[2.4rem] px-[1.6rem]">
@@ -56,7 +53,7 @@ export default function SearchPage() {
       >
         Found {searchedMovies.length}{" "}
         {searchedMovies.length > 1 ? <span>results</span> : <span>result</span>}{" "}
-        for `{movieTitle}`
+        for `{searchQuery}`
       </h1>
       <div
         className="mt-[2.4rem] grid grid-cols-2 gap-[1.5rem]
