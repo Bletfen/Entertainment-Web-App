@@ -2,6 +2,10 @@
 
 A modern, full-stack entertainment web application built with Next.js that allows users to browse, search, and bookmark movies and TV series. Features a beautiful, responsive UI with trending content carousel and personalized bookmark management.
 
+## 🌐 Live Site
+
+- Deployed on Vercel: [entertainment-web-app-three-zeta.vercel.app](https://entertainment-web-app-three-zeta.vercel.app/)
+
 ## 🚀 Features
 
 - **Browse Content**: View movies and TV series with detailed information
