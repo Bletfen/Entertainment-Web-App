@@ -11,7 +11,6 @@ function SearchContent() {
 
   const searchQuery = query.toLowerCase();
   const [searchedMovies, setSearchedMovies] = useState<TMovies>([]);
-  console.log(searchQuery);
 
   useEffect(() => {
     async function fetchMovies() {

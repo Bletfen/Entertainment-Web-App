@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export default function NavBar() {
   const pathName = usePathname();
-  console.log(pathName);
   return (
     <div
       className="flex items-center gap-[2.4rem]
