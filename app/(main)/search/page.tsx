@@ -2,10 +2,10 @@
 import { handleBookMarkToggle } from "@/functions";
 import BookmarkController from "@/components/BookmarkController";
 import MovieDetails from "@/components/MovieDetails";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
 
@@ -89,5 +89,19 @@ export default function SearchPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <p>Loading search results...</p>
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   );
 }
