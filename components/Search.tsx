@@ -30,7 +30,7 @@ export default function Search() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="outline-none text my-[0.2rem] text-[1.6rem] font-[300] 
+        className="flex-1 outline-none my-[0.2rem] text-[1.6rem] font-[300] 
         text-white md:text-[2.4rem]"
         placeholder="Search for movies or TV series"
       />
