@@ -13,6 +13,7 @@ A modern, full-stack entertainment web application built with Next.js that allow
 - **Search Functionality**: Search across all movies and TV series
 - **Bookmarking**: Save your favorite movies and TV series for later
 - **User Authentication**: Secure login and registration with JWT
+- **Logout Functionality**: Secure logout with session termination
 - **Responsive Design**: Fully responsive UI that works on all devices
 - **Category Filtering**: Filter content by Movies, TV Series, or view all
 - **Bookmark Management**: Separate views for bookmarked movies and TV series
@@ -124,6 +125,7 @@ enetertainment-web-app/
 │   ├── api/                 # API routes
 │   │   ├── bookmark/        # Bookmark API
 │   │   ├── login/           # Login API
+│   │   ├── logout/          # Logout API
 │   │   ├── movies/          # Movies API
 │   │   └── register/        # Registration API
 │   ├── login/               # Login page
@@ -133,6 +135,7 @@ enetertainment-web-app/
 │   ├── BookmarkController.tsx
 │   ├── EmblaCarousel.tsx
 │   ├── Header.tsx
+│   ├── Logout.tsx
 │   ├── MovieDetails.tsx
 │   ├── MoviesList.tsx
 │   ├── NavBar.tsx
@@ -153,6 +156,7 @@ enetertainment-web-app/
 - Secure user registration and login
 - JWT-based authentication
 - Password hashing with bcrypt
+- Secure logout with session termination
 
 ### Bookmarking System
 
@@ -178,6 +182,7 @@ enetertainment-web-app/
 - `GET /api/bookmark` - Get user bookmarks
 - `POST /api/bookmark` - Add/remove bookmark
 - `POST /api/login` - User login
+- `POST /api/logout` - User logout (clears authentication token)
 - `POST /api/register` - User registration
 
 ## 🎨 Styling
